@@ -1,0 +1,44 @@
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
+using Owin;
+
+namespace _462_TheLastLike
+{
+    public partial class Startup
+    {
+        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        public void ConfigureAuth(IAppBuilder app)
+        {
+            // Enable the application to use a cookie to store information for the signed in user
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login")
+            });
+            // Use a cookie to temporarily store information about a user logging in with a third party login provider
+            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            // Uncomment the following lines to enable logging in with third party login providers
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: "");
+
+            //app.UseTwitterAuthentication(
+            //   consumerKey: "",
+            //   consumerSecret: "");
+
+            var facebookOptions = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions();
+            facebookOptions.AppId = "542916799163408";
+            facebookOptions.AppSecret = "f39082fcaa15dda4a01619d6e5c097dd";
+            //facebookOptions.Scope.Add("publish_actions");
+            //facebookOptions.Scope.Add("status_update");
+            //facebookOptions.Scope.Add("manage_pages");
+            facebookOptions.Scope.Add("user_likes");
+
+            app.UseFacebookAuthentication(facebookOptions);
+
+            //app.UseGoogleAuthentication();
+        }
+    }
+}
