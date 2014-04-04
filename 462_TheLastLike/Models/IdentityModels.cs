@@ -11,7 +11,7 @@ namespace _462_TheLastLike.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("azure")
+            : base("DefaultConnection")
         {
         }
     }
