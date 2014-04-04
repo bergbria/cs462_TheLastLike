@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Owin;
+using System.Web;
 
 namespace _462_TheLastLike
 {
@@ -35,6 +37,14 @@ namespace _462_TheLastLike
             //facebookOptions.Scope.Add("status_update");
             //facebookOptions.Scope.Add("manage_pages");
             facebookOptions.Scope.Add("user_likes");
+
+            facebookOptions.Provider = new FacebookAuthenticationProvider()
+            {
+                OnAuthenticated = async context =>
+                {
+                    HttpContext.Current.Session.Add("FacebookContext", context);
+                }
+            };
 
             app.UseFacebookAuthentication(facebookOptions);
 

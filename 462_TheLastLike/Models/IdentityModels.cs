@@ -6,7 +6,7 @@ namespace _462_TheLastLike.Models
     public class ApplicationUser : IdentityUser
     {
         public string LastFMSessionKey { get; set; }
-
+        public string FacebookAccessToken { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

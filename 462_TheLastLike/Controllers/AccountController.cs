@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using _462_TheLastLike.Models;
+using Microsoft.Owin.Security.Facebook;
 
 namespace _462_TheLastLike.Controllers
 {
@@ -265,7 +266,8 @@ namespace _462_TheLastLike.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var facebookContext = HttpContext.Session["FacebookContext"] as FacebookAuthenticatedContext;
+                var user = new ApplicationUser() { UserName = model.UserName, FacebookAccessToken = facebookContext.AccessToken };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
