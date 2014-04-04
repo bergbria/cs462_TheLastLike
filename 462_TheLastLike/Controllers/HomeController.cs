@@ -68,7 +68,7 @@ namespace _462_TheLastLike.Controllers
             user.LastFMSessionKey = token;
             db.SaveChanges();
 
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }
