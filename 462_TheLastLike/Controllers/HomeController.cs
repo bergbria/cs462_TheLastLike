@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using _462_TheLastLike.Utils.Facebook;
 
 namespace _462_TheLastLike.Controllers
 {
@@ -19,8 +20,29 @@ namespace _462_TheLastLike.Controllers
         private const string LastFMAPIKey = "b06a27c2149690731f77c269f1810928";
         private const string LastFMAPISecret = "98b1814c8e12a1a5a651994c1a16401b";
 
+        protected ApplicationDbContext ApplicationDbContext { get; set; }
+        protected UserManager<ApplicationUser> UserManager { get; set; }
+
+        public ApplicationUser GetCurrentUser()
+        {
+            return UserManager.FindById(User.Identity.GetUserId());
+        }
+
+        public HomeController()
+        {
+            this.ApplicationDbContext = new ApplicationDbContext();
+            this.UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.ApplicationDbContext));
+        }
+
         public ActionResult Index()
         {
+            //if (Request.IsAuthenticated)
+            //{
+            //    var user = GetCurrentUser();
+            //    string accessToken = user.FacebookAccessToken;
+            //    var likedArtists = FacebookUtils.GetMusicLikes(accessToken);
+            //    FacebookUtils.PostToFacebook(accessToken, "please ignore this");
+            //}
             return View();
         }
 
@@ -41,9 +63,6 @@ namespace _462_TheLastLike.Controllers
         public ActionResult LastFMCallback()
         {
             string token = HttpUtility.ParseQueryString(Request.Url.Query).Get("token");
-            var db = new ApplicationDbContext();
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-            var user = userManager.FindById(User.Identity.GetUserId());
 
             string apiSigPreHash = "api_key" + LastFMAPIKey + "methodauth.getSessiontoken" + token + LastFMAPISecret;
             string apiSig = Lastfm.Utilities.md5(apiSigPreHash);
@@ -65,8 +84,9 @@ namespace _462_TheLastLike.Controllers
             dynamic foo = JObject.Parse(responseData);
             string sessionKey = foo.session.key;
 
+            ApplicationUser user = GetCurrentUser();
             user.LastFMSessionKey = token;
-            db.SaveChanges();
+            ApplicationDbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }

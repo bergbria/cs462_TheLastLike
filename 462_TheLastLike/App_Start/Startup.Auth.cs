@@ -21,21 +21,10 @@ namespace _462_TheLastLike
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
-
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
-
             var facebookOptions = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions();
             facebookOptions.AppId = "542916799163408";
             facebookOptions.AppSecret = "f39082fcaa15dda4a01619d6e5c097dd";
-            //facebookOptions.Scope.Add("publish_actions");
-            //facebookOptions.Scope.Add("status_update");
-            //facebookOptions.Scope.Add("manage_pages");
+            facebookOptions.Scope.Add("publish_actions");
             facebookOptions.Scope.Add("user_likes");
 
             facebookOptions.Provider = new FacebookAuthenticationProvider()
@@ -47,8 +36,6 @@ namespace _462_TheLastLike
             };
 
             app.UseFacebookAuthentication(facebookOptions);
-
-            //app.UseGoogleAuthentication();
         }
     }
 }
