@@ -12,7 +12,7 @@ namespace _462_TheLastLike.Utils.Facebook
 {
     public class FacebookUtils
     {
-        private static WebClient GetFacebookWebClient(string accessToken)
+        private static WebClient CreateFacebookWebClient(string accessToken)
         {
             WebClient webClient = new WebClient();
             webClient.QueryString.Add("access_token", accessToken);
@@ -27,7 +27,7 @@ namespace _462_TheLastLike.Utils.Facebook
         public static List<string> GetMusicLikes(string accessToken)
         {
             string jsonResponse;
-            using (WebClient webClient = GetFacebookWebClient(accessToken))
+            using (WebClient webClient = CreateFacebookWebClient(accessToken))
             {
                 jsonResponse = webClient.DownloadString(FacebookUrls.GET_MUSIC_LIKES);
             }
@@ -44,7 +44,7 @@ namespace _462_TheLastLike.Utils.Facebook
         public static void PostToFacebook(string accessToken, string message)
         {
             string url = string.Format(FacebookUrls.POST_MESSAGE, accessToken);
-            using (WebClient webClient = GetFacebookWebClient(accessToken))
+            using (WebClient webClient = CreateFacebookWebClient(accessToken))
             {
                 var data = new NameValueCollection();
                 data["message"] = message;

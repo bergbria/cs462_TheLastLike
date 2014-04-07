@@ -39,9 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="lastfm-sharp">
-      <HintPath>lib\lastfm-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,6 +169,9 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Facebook\FacebookUtils.cs" />
     <Compile Include="Utils\Facebook\FacebookUrls.cs" />
+    <Compile Include="Utils\LastFm\DO\Artist.cs" />
+    <Compile Include="Utils\LastFm\LastFmUrls.cs" />
+    <Compile Include="Utils\LastFm\LastFmUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

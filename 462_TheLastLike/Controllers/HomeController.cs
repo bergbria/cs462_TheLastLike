@@ -12,14 +12,12 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using _462_TheLastLike.Utils.Facebook;
+using _462_TheLastLike.Utils.LastFm;
 
 namespace _462_TheLastLike.Controllers
 {
     public class HomeController : Controller
     {
-        private const string LastFMAPIKey = "b06a27c2149690731f77c269f1810928";
-        private const string LastFMAPISecret = "98b1814c8e12a1a5a651994c1a16401b";
-
         protected ApplicationDbContext ApplicationDbContext { get; set; }
         protected UserManager<ApplicationUser> UserManager { get; set; }
 
@@ -42,6 +40,7 @@ namespace _462_TheLastLike.Controllers
             //    string accessToken = user.FacebookAccessToken;
             //    var likedArtists = FacebookUtils.GetMusicLikes(accessToken);
             //    FacebookUtils.PostToFacebook(accessToken, "please ignore this");
+            //    var artist = LastFmUtils.FindArtist("carly rae jepsen");
             //}
             return View();
         }
@@ -60,32 +59,12 @@ namespace _462_TheLastLike.Controllers
             return View();
         }
 
-        public ActionResult LastFMCallback()
+        public ActionResult LastFmCallback()
         {
-            string token = HttpUtility.ParseQueryString(Request.Url.Query).Get("token");
-
-            string apiSigPreHash = "api_key" + LastFMAPIKey + "methodauth.getSessiontoken" + token + LastFMAPISecret;
-            string apiSig = Lastfm.Utilities.md5(apiSigPreHash);
-
-            string queryString =
-                "&token=" + token +
-                "&api_key=" + LastFMAPIKey +
-                "&api_sig=" + apiSig +
-                "&format=json";
-
-            string baseURL = "http://ws.audioscrobbler.com/2.0/?method=auth.getSession";
-            string url = baseURL + queryString;
-            
-            WebRequest request = WebRequest.Create(url);
-
-            var response = request.GetResponse();
-            string responseData = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            dynamic foo = JObject.Parse(responseData);
-            string sessionKey = foo.session.key;
+            string sessionKey = LastFmUtils.ObtainSessionKey(Request.Url);
 
             ApplicationUser user = GetCurrentUser();
-            user.LastFMSessionKey = token;
+            user.LastFMSessionKey = sessionKey;
             ApplicationDbContext.SaveChanges();
 
             return RedirectToAction("Index");
