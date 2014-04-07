@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -32,7 +30,7 @@ namespace _462_TheLastLike.Utils.LastFm
         }
         public static string CalculateMD5Hash(string input)
         {
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            MD5 md5 = MD5.Create();
 
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
             byte[] hash = md5.ComputeHash(inputBytes);
