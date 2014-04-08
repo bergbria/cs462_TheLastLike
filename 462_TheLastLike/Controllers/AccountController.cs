@@ -275,7 +275,6 @@ namespace _462_TheLastLike.Controllers
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
-                        FacebookUtils.subscribeToUserLikes(facebookContext.AccessToken);
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
