@@ -180,5 +180,24 @@ namespace _462_TheLastLike.Utils.LastFm
             string playlistId = parsedResult.playlists.playlist.id;
             return playlistId;
         }
+
+        public static void AddTop5TracksToPlaylist(string sessionKey, string playlistId, Artist artist)
+        {
+            Track[] top5 = GetTopTracks(artist.name);
+
+            foreach (var track in top5)
+            {
+                NameValueCollection arguments = new NameValueCollection
+                    {
+                        {"method", "playlist.addTrack"},
+                        {"playlistID", playlistId},
+                        {"track", track.name},
+                        {"artist", artist.name},
+                    };
+                string response = PostToLastFM(arguments, sessionKey);
+                response.ToString();
+            }
+
+        }
     }
 }
