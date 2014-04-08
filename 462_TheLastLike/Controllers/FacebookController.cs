@@ -6,13 +6,19 @@ using System.Web.Mvc;
 
 namespace _462_TheLastLike.Controllers
 {
-    public class FacebookSubscriptionController : Controller
+    public class FacebookController : Controller
     {
         //
         // GET: /FacebookSubscription/
-        public ActionResult Index()
+        public string Index()
         {
             return null;
+        }
+
+        public string Subscription()
+        {
+            string challange = Request.QueryString.Get("hub.challenge");
+            return challange;
         }
 	}
 }

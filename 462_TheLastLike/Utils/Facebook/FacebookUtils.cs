@@ -55,11 +55,11 @@ namespace _462_TheLastLike.Utils.Facebook
 
         public static string subscribeToUserLikes(string accessToken)
         {
-            using (WebClient webClient = CreateFacebookWebClient(accessToken))
+            using (WebClient webClient = CreateFacebookWebClient("542916799163408|dwQtH0UHTVFr-x4KqbDBkI_BR58")) //accessToken
             {
                 var data = new NameValueCollection();
                 data["object"] = "user";
-                data["callback_url"] = "http://localhost:59053/FacebookSubscription";
+                data["callback_url"] = "http://localhost:59053/Facebook/Subscription";
                 data["fields"] = "music";
                 data["verify_token"] = "thisisaverifytoken";
                 string url = FacebookConstants.SUB_URL;
