@@ -185,22 +185,23 @@ namespace _462_TheLastLike.Utils.LastFm
         {
             Track[] top5 = GetTopTracks(artistName);
 
-            foreach (var track in top5)
+            if (top5 != null)
             {
-                NameValueCollection arguments = new NameValueCollection
+                foreach (var track in top5)
+                {
+                    NameValueCollection arguments = new NameValueCollection
                     {
                         {"method", "playlist.addTrack"},
                         {"playlistID", playlistId},
                         {"track", track.name},
                         {"artist", artistName},
                     };
-                string response = PostToLastFM(arguments, sessionKey);
-                response.ToString();
+                    string response = PostToLastFM(arguments, sessionKey);
+                }
             }
-
         }
 
-        public static void AddTopHitsToPlaylist(string sessionKey, string playlistId, IEnumerable<string> artistNames )
+        public static void AddTopHitsToPlaylist(string sessionKey, string playlistId, IEnumerable<string> artistNames)
         {
             foreach (var artistName in artistNames)
             {

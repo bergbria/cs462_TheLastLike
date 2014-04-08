@@ -47,10 +47,6 @@ namespace _462_TheLastLike.Controllers
                 var user = GetCurrentUser();
                 string accessToken = user.FacebookAccessToken;
                 ViewBag.isConnectedToLastFm = user.LastFmSessionKey != null;
-
-                var artistNames = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
-                LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, artistNames);
-
             }
             return View();
         }
@@ -79,6 +75,9 @@ namespace _462_TheLastLike.Controllers
             user.LastFmSessionKey = sessionKey;
             user.LastFmPlaylistId = playlistId;
             ApplicationDbContext.SaveChanges();
+
+            var artistNames = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
+            LastFmUtils.AddTopHitsToPlaylist("6596b4a08b668457a3218c23f41633b0", "11604254", artistNames);
 
             return RedirectToAction("Index");
         }
