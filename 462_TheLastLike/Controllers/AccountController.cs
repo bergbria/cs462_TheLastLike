@@ -10,7 +10,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using _462_TheLastLike.Models;
 using Microsoft.Owin.Security.Facebook;
-using _462_TheLastLike.Utils.Facebook;
 
 namespace _462_TheLastLike.Controllers
 {
@@ -272,11 +271,9 @@ namespace _462_TheLastLike.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
-                        FacebookUtils.subscribeToUserLikes(facebookContext.AccessToken);
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }

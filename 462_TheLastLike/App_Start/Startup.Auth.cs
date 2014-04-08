@@ -1,5 +1,4 @@
-﻿using _462_TheLastLike.Utils.Facebook;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
@@ -23,8 +22,8 @@ namespace _462_TheLastLike
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             var facebookOptions = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions();
-            facebookOptions.AppId = FacebookConstants.APP_ID;
-            facebookOptions.AppSecret = FacebookConstants.APP_SECRET;
+            facebookOptions.AppId = "542916799163408";
+            facebookOptions.AppSecret = "f39082fcaa15dda4a01619d6e5c097dd";
             facebookOptions.Scope.Add("publish_actions");
             facebookOptions.Scope.Add("user_likes");
 
