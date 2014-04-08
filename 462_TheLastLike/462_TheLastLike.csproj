@@ -171,6 +171,7 @@
     <Compile Include="Utils\Facebook\FacebookUtils.cs" />
     <Compile Include="Utils\Facebook\FacebookConstants.cs" />
     <Compile Include="Utils\LastFm\DO\Artist.cs" />
+    <Compile Include="Utils\LastFm\DO\Track.cs" />
     <Compile Include="Utils\LastFm\LastFmUrls.cs" />
     <Compile Include="Utils\LastFm\LastFmUtils.cs" />
   </ItemGroup>

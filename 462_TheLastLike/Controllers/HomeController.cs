@@ -42,6 +42,13 @@ namespace _462_TheLastLike.Controllers
             //    FacebookUtils.PostToFacebook(accessToken, "please ignore this");
             //    var artist = LastFmUtils.FindArtist("carly rae jepsen");
             //}
+            if (Request.IsAuthenticated)
+            {
+                var user = GetCurrentUser();
+                string accessToken = user.FacebookAccessToken;
+                ViewBag.isConnectedToLastFm = user.LastFMSessionKey != null;
+                LastFmUtils.GetTopTracks("carly rae jepsen");
+            }
             return View();
         }
 
