@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace _462_TheLastLike.Utils.Facebook
 {
@@ -58,11 +59,13 @@ namespace _462_TheLastLike.Utils.Facebook
             {
                 var data = new NameValueCollection();
                 data["object"] = "user";
-                data["callback_url"] = "http://localhost:59053/user_sub";
+                data["callback_url"] = "http://localhost:59053/FacebookSubscription";
                 data["fields"] = "music";
                 data["verify_token"] = "thisisaverifytoken";
-                string url = FacebookConstants.BASE_URL + 
-                webClient.UploadValues(FacebookConstants, "POST", data);
+                string url = FacebookConstants.SUB_URL;
+                byte[] responseBytes = webClient.UploadValues(url, "POST", data);
+                string responseString = Encoding.UTF8.GetString(responseBytes);
+                return responseString;
             }
         }
     }
