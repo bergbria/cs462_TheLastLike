@@ -181,9 +181,9 @@ namespace _462_TheLastLike.Utils.LastFm
             return playlistId;
         }
 
-        public static void AddTop5TracksToPlaylist(string sessionKey, string playlistId, Artist artist)
+        public static void AddTop5TracksToPlaylist(string sessionKey, string playlistId, string artistName)
         {
-            Track[] top5 = GetTopTracks(artist.name);
+            Track[] top5 = GetTopTracks(artistName);
 
             foreach (var track in top5)
             {
@@ -192,12 +192,20 @@ namespace _462_TheLastLike.Utils.LastFm
                         {"method", "playlist.addTrack"},
                         {"playlistID", playlistId},
                         {"track", track.name},
-                        {"artist", artist.name},
+                        {"artist", artistName},
                     };
                 string response = PostToLastFM(arguments, sessionKey);
                 response.ToString();
             }
 
+        }
+
+        public static void AddTopHitsToPlaylist(string sessionKey, string playlistId, IEnumerable<string> artistNames )
+        {
+            foreach (var artistName in artistNames)
+            {
+                AddTop5TracksToPlaylist(sessionKey, playlistId, artistName);
+            }
         }
     }
 }

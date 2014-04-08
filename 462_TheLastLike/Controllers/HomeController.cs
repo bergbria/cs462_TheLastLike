@@ -47,7 +47,10 @@ namespace _462_TheLastLike.Controllers
                 var user = GetCurrentUser();
                 string accessToken = user.FacebookAccessToken;
                 ViewBag.isConnectedToLastFm = user.LastFmSessionKey != null;
-                LastFmUtils.GetTopTracks("carly rae jepsen");
+
+                var artistNames = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
+                LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, artistNames);
+
             }
             return View();
         }
@@ -70,7 +73,7 @@ namespace _462_TheLastLike.Controllers
         {
             string token = Request.QueryString.Get("token");
             string sessionKey = LastFmUtils.ObtainSessionKey(token);
-            string playlistId = LastFmUtils.CreatePlaylist("foo", sessionKey, token);
+            string playlistId = LastFmUtils.CreatePlaylist("My LastLike Tracks", sessionKey, token);
 
             ApplicationUser user = GetCurrentUser();
             user.LastFmSessionKey = sessionKey;
