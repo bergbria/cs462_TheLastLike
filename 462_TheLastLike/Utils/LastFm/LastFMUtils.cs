@@ -8,6 +8,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using _462_TheLastLike.Utils.LastFm.DO;
+using System.Collections.Generic;
 
 namespace _462_TheLastLike.Utils.LastFm
 {
@@ -87,6 +88,29 @@ namespace _462_TheLastLike.Utils.LastFm
                 Artist artist = JsonConvert.DeserializeObject<Artist>(matchingArtists["artist"].ToString());
 
                 return artist;
+            }
+        }
+
+        public static Track[] GetTopTracks(string artistSearchText)
+        {
+            using (WebClient webClient = CreateLastFmWebClient("artist.getTopTracks"))
+            {
+                webClient.QueryString.Add(new NameValueCollection {
+                    {"artist", artistSearchText},
+                    {"limit", "5"},
+                    {"autocorrect", "1"}
+                });
+
+                string jsonResponse = webClient.DownloadString(LastFmUrls.API_ROOT);
+                JObject parsedResponse = JObject.Parse(jsonResponse);
+
+                var matchingTracks = parsedResponse["toptracks"];
+                if (matchingTracks == null || !matchingTracks.Any())
+                {
+                    return null;
+                }
+                var topTracksArr = JsonConvert.DeserializeObject<Track[]>(matchingTracks["track"].ToString());
+                return topTracksArr;
             }
         }
     }

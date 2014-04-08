@@ -3,11 +3,20 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>LastLike</h1>
+    <p class="lead">Integrate your Facebook music likes with your Last.fm artist library and playlist!</p>
+    <p></p>
 </div>
 
-<div class="row">
-    <a href="http://www.last.fm/api/auth/?api_key=b06a27c2149690731f77c269f1810928">Connect to Last.fm</a>
-</div>
+    @if (Request.IsAuthenticated) {
+        if(!ViewBag.isConnectedToLastFm)
+        {
+            <div class="row">
+            <a href="http://www.last.fm/api/auth/?api_key=b06a27c2149690731f77c269f1810928">Connect to Last.fm</a>
+            </div>
+        }
+        else
+        {
+            <h3>Already connected to Last.fm!</h3>
+        }
+    }
