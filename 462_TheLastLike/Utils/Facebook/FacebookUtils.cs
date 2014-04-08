@@ -59,7 +59,7 @@ namespace _462_TheLastLike.Utils.Facebook
             {
                 var data = new NameValueCollection();
                 data["object"] = "user";
-                data["callback_url"] = "http://localhost:59053/Facebook/Subscription";
+                data["callback_url"] = "http://thelastlike.azurewebsites.net/Facebook/Subscription";
                 data["fields"] = "music";
                 data["verify_token"] = "thisisaverifytoken";
                 string url = FacebookConstants.SUB_URL;
