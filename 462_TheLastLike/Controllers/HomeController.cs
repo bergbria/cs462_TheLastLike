@@ -77,7 +77,7 @@ namespace _462_TheLastLike.Controllers
             ApplicationDbContext.SaveChanges();
 
             var artistNames = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
-            LastFmUtils.AddTopHitsToPlaylist("6596b4a08b668457a3218c23f41633b0", "11604254", artistNames);
+            LastFmUtils.AddTopHitsToPlaylist(sessionKey, playlistId, artistNames);
 
             return RedirectToAction("Index");
         }
