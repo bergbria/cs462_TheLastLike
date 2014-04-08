@@ -29,7 +29,7 @@ namespace _462_TheLastLike.Controllers
             {
                 string jsonString = new StreamReader(Request.InputStream).ReadToEnd();
                 JObject parsedResponse = JObject.Parse(jsonString);
-                JArray changed_values = (JArray) parsedResponse["changed_fields"];
+                JArray changed_values = (JArray) parsedResponse["entry"];
                 jsonData = changed_values;
                 return changed_values.ToString();
             }
