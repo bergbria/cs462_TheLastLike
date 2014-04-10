@@ -15,7 +15,8 @@ namespace _462_TheLastLike.Controllers
 {
     public class FacebookController : Controller
     {
-        static string jsonData;
+        static JArray jsonData;
+        static string debug;
         //
         // GET: /FacebookSubscription/
         public string Index()
@@ -35,25 +36,31 @@ namespace _462_TheLastLike.Controllers
                 string jsonString = new StreamReader(Request.InputStream).ReadToEnd();
                 JObject parsedResponse = JObject.Parse(jsonString);
                 JArray changed_values = (JArray) parsedResponse["entry"];
+                jsonData = changed_values;
+                debug = "0";
                 UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-                jsonData = "0";
+                debug = "1";
                 var user = userManager.FindById(User.Identity.GetUserId());
-                jsonData = "1";
+                debug = "2";
                 List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
-                jsonData = "2";
+                debug = "3";
                 LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
-                jsonData = "3";
+                debug = "4";
                 FacebookUtils.PostToFacebook(user.FacebookAccessToken, "Last.fm playlist updated!!");
-                jsonData = "4";
-                return "1";
+                debug = "5";
+                return changed_values.ToString();
             }
         }
         
         public string Json()
         {
-            return jsonData;  
+            return jsonData.ToString();  
         }
 
+        public string Debug()
+        {
+            return debug;
+        }
 
 	}
 }
