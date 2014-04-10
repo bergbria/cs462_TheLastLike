@@ -44,13 +44,13 @@ namespace _462_TheLastLike.Controllers
                 jsonData = "3";
                 FacebookUtils.PostToFacebook(user.FacebookAccessToken, "Last.fm playlist updated!!");
                 jsonData = "4";
-                return likes.ToString();
+                return "1";
             }
         }
         
         public string Json()
         {
-            return jsonData.ToString();  
+            return jsonData;  
         }
 
 
