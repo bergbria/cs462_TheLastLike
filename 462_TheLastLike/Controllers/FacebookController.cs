@@ -41,7 +41,7 @@ namespace _462_TheLastLike.Controllers
                 List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
                 LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
                 FacebookUtils.PostToFacebook(user.FacebookAccessToken, "Last.fm playlist updated!!");
-                return changed_values.ToString();
+                return likes.ToString();
             }
         }
         
