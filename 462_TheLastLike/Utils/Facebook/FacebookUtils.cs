@@ -38,6 +38,24 @@ namespace _462_TheLastLike.Utils.Facebook
         }
 
         /// <summary>
+        /// retrieves a list of the names of the user's like musical artists
+        /// </summary>
+        /// <param name="accessToken">the user's facebook api access token</param>
+        /// <returns>list of artist names</returns>
+        public static List<string> GetMusicLikes(string userId, string accessToken)
+        {
+            string jsonResponse;
+            using (WebClient webClient = CreateFacebookWebClient(accessToken))
+            {
+                jsonResponse = webClient.DownloadString("https://graph.facebook.com/" + userId + "/music");
+            }
+            dynamic parsedResponse = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
+            IEnumerable<dynamic> likes = parsedResponse.data;
+            return likes.Select(like => (string)like.name).ToList();
+        }
+
+
+        /// <summary>
         /// Posts a message to the user's wall. May contain HTML (I think)
         /// </summary>
         /// <param name="accessToken">the user's facebook api access token</param>

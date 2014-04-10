@@ -8,6 +8,7 @@ namespace _462_TheLastLike.Models
         public string LastFmSessionKey { get; set; }
         public string FacebookAccessToken { get; set; }
         public string LastFmPlaylistId { get; set; }
+        public string FacebookUserId { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

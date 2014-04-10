@@ -268,7 +268,7 @@ namespace _462_TheLastLike.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var facebookContext = HttpContext.Session["FacebookContext"] as FacebookAuthenticatedContext;
-                var user = new ApplicationUser() { UserName = model.UserName, FacebookAccessToken = facebookContext.AccessToken };
+                var user = new ApplicationUser() { UserName = model.UserName, FacebookAccessToken = facebookContext.AccessToken, FacebookUserId = facebookContext.Id };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

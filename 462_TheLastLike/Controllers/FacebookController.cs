@@ -35,20 +35,28 @@ namespace _462_TheLastLike.Controllers
             {
                 string jsonString = new StreamReader(Request.InputStream).ReadToEnd();
                 JObject parsedResponse = JObject.Parse(jsonString);
-                JArray changed_values = (JArray) parsedResponse["entry"];
-                jsonData = changed_values;
+                JArray entries = (JArray) parsedResponse["entry"];
+                jsonData = entries;
                 debug = "0";
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                ApplicationDbContext con = new ApplicationDbContext();
+                var users = con.Users;
+                foreach (JObject entry in entries) {
+                    foreach (ApplicationUser user in users) 
+                    {
+                        if (user.FacebookUserId == (string) entry["id"])
+                        {
+                            List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookUserId, user.FacebookAccessToken);
+                            LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
+                        }
+                    }
+                }
                 debug = "1";
-                var user = userManager.FindById(User.Identity.GetUserId());
-                debug = "2";
-                /*List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
+                /*
                 debug = "3";
-                LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
                 debug = "4";
                 FacebookUtils.PostToFacebook(user.FacebookAccessToken, "Last.fm playlist updated!!");
                 debug = "5";*/
-                return changed_values.ToString();
+                return entries.ToString();
             }
         }
         
