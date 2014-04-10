@@ -36,6 +36,7 @@ namespace _462_TheLastLike.Controllers
                 JObject parsedResponse = JObject.Parse(jsonString);
                 JArray changed_values = (JArray) parsedResponse["entry"];
                 UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                jsonData = "0";
                 var user = userManager.FindById(User.Identity.GetUserId());
                 jsonData = "1";
                 List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
