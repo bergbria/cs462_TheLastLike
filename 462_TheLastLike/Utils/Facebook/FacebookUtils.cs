@@ -52,21 +52,5 @@ namespace _462_TheLastLike.Utils.Facebook
                 webClient.UploadValues(url, "POST", data);
             }
         }
-
-        public static string subscribeToUserLikes(string accessToken)
-        {
-            using (WebClient webClient = CreateFacebookWebClient("542916799163408|dwQtH0UHTVFr-x4KqbDBkI_BR58")) //accessToken
-            {
-                var data = new NameValueCollection();
-                data["object"] = "user";
-                data["callback_url"] = "http://thelastlike.azurewebsites.net/Facebook/Subscription";
-                data["fields"] = "music";
-                data["verify_token"] = "thisisaverifytoken";
-                string url = FacebookConstants.SUB_URL;
-                byte[] responseBytes = webClient.UploadValues(url, "POST", data);
-                string responseString = Encoding.UTF8.GetString(responseBytes);
-                return responseString;
-            }
-        }
     }
 }

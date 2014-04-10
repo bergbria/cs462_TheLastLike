@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using _462_TheLastLike.Models;
+using _462_TheLastLike.Utils.Facebook;
+using _462_TheLastLike.Utils.LastFm;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +36,11 @@ namespace _462_TheLastLike.Controllers
                 JObject parsedResponse = JObject.Parse(jsonString);
                 JArray changed_values = (JArray) parsedResponse["entry"];
                 jsonData = changed_values;
+                UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = userManager.FindById(User.Identity.GetUserId());
+                List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
+                LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
+                FacebookUtils.PostToFacebook(user.FacebookAccessToken, "Last.fm playlist updated!!");
                 return changed_values.ToString();
             }
         }
