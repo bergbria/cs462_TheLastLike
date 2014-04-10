@@ -37,10 +37,10 @@ namespace _462_TheLastLike.Controllers
                 JObject parsedResponse = JObject.Parse(jsonString);
                 JArray changed_values = (JArray) parsedResponse["entry"];
                 jsonData = changed_values;
-                /*debug = "0";
+                debug = "0";
                 UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                 debug = "1";
-                var user = userManager.FindById(User.Identity.GetUserId());
+                /*var user = userManager.FindById(User.Identity.GetUserId());
                 debug = "2";
                 List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookAccessToken);
                 debug = "3";
