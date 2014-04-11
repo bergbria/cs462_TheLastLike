@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -39,19 +40,19 @@ namespace _462_TheLastLike.Controllers
                 jsonData = entries;
                 debug = "0";
                 ApplicationDbContext con = new ApplicationDbContext();
-                var users = con.Users;
+                IDbSet<ApplicationUser> users = con.Users;
                 debug = users.ToString();
-                foreach (JObject entry in entries) {
-                    /*foreach (ApplicationUser user in users) 
+                foreach (var entry in entries) {
+                    foreach (var user in users) 
                     {
                         if (user.FacebookUserId == (string) entry["id"])
                         {
                             List<string> likes = FacebookUtils.GetMusicLikes(user.FacebookUserId, user.FacebookAccessToken);
                             LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
                         }
-                    }*/
+                    }
                 }
-                //debug = "1";
+                debug = "1";
                 /*
                 debug = "3";
                 debug = "4";
