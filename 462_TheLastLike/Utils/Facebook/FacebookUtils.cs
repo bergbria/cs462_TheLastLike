@@ -70,5 +70,21 @@ namespace _462_TheLastLike.Utils.Facebook
                 webClient.UploadValues(url, "POST", data);
             }
         }
+
+        /// <summary>
+        /// Posts a message to the user's wall. May contain HTML (I think)
+        /// </summary>
+        /// <param name="accessToken">the user's facebook api access token</param>
+        /// <param name="message">the message to post to the wall</param>
+        public static void PostToFacebook(string userId, string accessToken, string message)
+        {
+            string url = string.Format("https://graph.facebook.com/" + userId + "/feed", accessToken);
+            using (WebClient webClient = CreateFacebookWebClient(accessToken))
+            {
+                var data = new NameValueCollection();
+                data["message"] = message;
+                webClient.UploadValues(url, "POST", data);
+            }
+        }
     }
 }
