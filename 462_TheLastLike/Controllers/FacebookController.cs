@@ -42,7 +42,7 @@ namespace _462_TheLastLike.Controllers
                 ApplicationDbContext con = new ApplicationDbContext();
                 IDbSet<ApplicationUser> users = con.Users;
                 debug = users.ToString();
-                foreach (var entry in entries) {
+                /*foreach (var entry in entries) {
                     foreach (var user in users) 
                     {
                         if (user.FacebookUserId == (string) entry["id"])
@@ -51,7 +51,7 @@ namespace _462_TheLastLike.Controllers
                             LastFmUtils.AddTopHitsToPlaylist(user.LastFmSessionKey, user.LastFmPlaylistId, likes);
                         }
                     }
-                }
+                }*/
                 debug = "1";
                 /*
                 debug = "3";
